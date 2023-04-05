@@ -4,13 +4,9 @@ const express = require("express");
 const { NotFoundError } = require("./expressError");
 const app = express();
 
-const userRoutes = require("./itemRoutes");
-const { logger, onlyAllowElie } = require("./middleware");
+const itemRoutes = require("./itemRoutes");
 
 app.use(express.json());
-
-// this applies to all requests at all paths
-app.use(logger);
 
 // apply a prefix to every route in itemRoutes
 app.use("/items", itemRoutes);
