@@ -8,6 +8,12 @@ const db = require("./fakeDb");
 const router = new express.Router();
 
 const { items } = require("./fakeDb");
+const { NotFoundError } = require("./expressError");
+
+items.push({
+  name: "product1",
+  price: 100
+});
 
 /** GET /items: get list of items
  * Return { items: [
@@ -27,7 +33,22 @@ router.get("/", function (req, res) {
 router.post("/", function (req, res) {
   const newItem = req.body;
   items.push(newItem);
+  console.log("items in itemRoutes", items);
   return res.json({added: newItem});
+});
+
+/**
+ * GET /items/:name: return a single item
+ * {name: "popsicle", "price": 1.45}
+ */
+router.get("/:name", function(req, res) {
+  const item = items.find((i) => i.name === req.params.name);
+
+  if (item === undefined) {
+    throw new NotFoundError();
+}
+
+return res.json({item});
 });
 
 
