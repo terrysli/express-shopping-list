@@ -3,7 +3,7 @@ const request = require("supertest");
 const app = require("./app");
 let { items } = require("./fakeDb");
 const PRODUCT1 = {
-  name: "product 1",
+  name: "product1",
   price: 100
 };
 
@@ -25,7 +25,7 @@ describe("GET /items", function () {
 describe("POST /items", function () {
   test("valid", async function () {
     const product2 = {
-      name: "product 2",
+      name: "product2",
       price: 50
     }
     const resp = await request(app)
