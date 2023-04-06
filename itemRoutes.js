@@ -10,11 +10,6 @@ const router = new express.Router();
 const { items } = require("./fakeDb");
 const { NotFoundError } = require("./expressError");
 
-items.push({
-  name: "product1",
-  price: 100
-});
-
 /** GET /items: get list of items
  * Return { items: [
   { name: "popsicle", price: 1.45 },
@@ -46,9 +41,28 @@ router.get("/:name", function(req, res) {
 
   if (item === undefined) {
     throw new NotFoundError();
-}
+  }
 
-return res.json({item});
+return res.json(item);
+});
+
+/**
+ * PATCH /items/:name:  update a single item
+ * Expect JSON input
+ * Returns JSON: {updated: {name: "new popsicle", price: 2.45}}
+ */
+router.patch("/:name", function(req, res) {
+  const item = items.find((i) => i.name === req.params.name);
+
+  if (item === undefined) {
+    throw new NotFoundError();
+  }
+
+  for (const prop in req.body) {
+    item[prop] = req.body[prop];
+  }
+
+return res.json({updated:item});
 });
 
 
