@@ -41,3 +41,21 @@ describe("POST /items", function () {
     // ]);
   });
 });
+
+describe("GET /items/:name", function () {
+  test("valid", async function () {
+    const resp = await request(app).get("/items/product1");
+    expect(resp.body).toEqual(PRODUCT1);
+  });
+
+  test("invalid", async function () {
+    const resp = await request(app).get("/items/product9");
+    expect(resp.status).toEqual(404);
+    expect(resp.body).toEqual({
+      "error": {
+        "message": "Not Found",
+        "status": 404
+      }
+    });
+  });
+});
