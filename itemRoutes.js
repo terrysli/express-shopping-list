@@ -17,7 +17,7 @@ const { NotFoundError } = require("./expressError");
   ]}
  */
 router.get("/", function (req, res) {
-  return res.json({items});
+  return res.json({ items });
 });
 
 
@@ -29,21 +29,21 @@ router.post("/", function (req, res) {
   const newItem = req.body;
   items.push(newItem);
   console.log("items in itemRoutes", items);
-  return res.json({added: newItem});
+  return res.json({ added: newItem });
 });
 
 /**
  * GET /items/:name: return a single item
  * {name: "popsicle", "price": 1.45}
  */
-router.get("/:name", function(req, res) {
+router.get("/:name", function (req, res) {
   const item = items.find((i) => i.name === req.params.name);
 
   if (item === undefined) {
     throw new NotFoundError();
   }
 
-return res.json(item);
+  return res.json(item);
 });
 
 /**
@@ -51,7 +51,7 @@ return res.json(item);
  * Expect JSON input
  * Returns JSON: {updated: {name: "new popsicle", price: 2.45}}
  */
-router.patch("/:name", function(req, res) {
+router.patch("/:name", function (req, res) {
   const item = items.find((i) => i.name === req.params.name);
 
   if (item === undefined) {
@@ -62,7 +62,7 @@ router.patch("/:name", function(req, res) {
     item[prop] = req.body[prop];
   }
 
-return res.json({updated:item});
+  return res.json({ updated: item });
 });
 
 
