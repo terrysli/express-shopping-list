@@ -14,7 +14,8 @@ beforeEach(function () {
 });
 
 afterEach(function () {
-  items = [];
+  items.splice(0, items.length); // REVIEW: items.length = 0
+  // REVIEW:  Don't mix mutating with rebinding
 });
 
 describe("GET /items", function () {
@@ -37,10 +38,10 @@ describe("POST /items", function () {
     console.log("items:", items);
     // TODO: potential test to add - but getting error of items not
     // mutating across files.
-    // expect(items).toEqual([
-    //   PRODUCT1,
-    //   product2
-    // ]);
+    expect(items).toEqual([
+      PRODUCT1,
+      product2
+    ]);
   });
 });
 
