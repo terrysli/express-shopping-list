@@ -66,10 +66,17 @@ return res.json({updated:item});
 });
 
 
-// /** DELETE /users/[id]: delete user, return {message: Deleted} */
-// router.delete("/:id", function (req, res) {
-//   db.User.delete(req.params.id);
-//   return res.json({ message: "Deleted" });
-// });
+/** DELETE /items/:name: delete item, return {message: Deleted} */
+router.delete("/:name", function (req, res) {
+  const idx = items.findIndex((i) => i.name === req.params.name);
+
+  if (idx === -1) {
+    throw new NotFoundError();
+  }
+
+  items.splice(idx, 1);
+
+  return res.json({ message: "Deleted" });
+});
 
 module.exports = router;
