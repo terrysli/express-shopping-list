@@ -1,3 +1,5 @@
+"use strict";
+
 const request = require("supertest");
 
 const app = require("./app");
@@ -18,7 +20,7 @@ afterEach(function () {
 describe("GET /items", function () {
   test("valid", async function () {
     const resp = await request(app).get("/items");
-    expect(resp.body).toEqual({items: [PRODUCT1]});
+    expect(resp.body).toEqual({ items: [PRODUCT1] });
   });
 });
 
@@ -27,11 +29,11 @@ describe("POST /items", function () {
     const product2 = {
       name: "product2",
       price: 50
-    }
+    };
     const resp = await request(app)
       .post("/items")
       .send(product2);
-    expect(resp.body).toEqual({added: product2});
+    expect(resp.body).toEqual({ added: product2 });
     console.log("items:", items);
     // TODO: potential test to add - but getting error of items not
     // mutating across files.
@@ -62,24 +64,24 @@ describe("GET /items/:name", function () {
 
 describe("PATCH /items/:name", function () {
   test("valid change all", async function () {
-    const patchData = {name:"Troll", price: 1.00};
+    const patchData = { name: "Troll", price: 1.00 };
     const resp = await request(app)
       .patch(`/items/${PRODUCT1.name}`)
       .send(patchData);
-    expect(resp.body).toEqual({updated: patchData});
+    expect(resp.body).toEqual({ updated: patchData });
   });
 
   test("valid change one", async function () {
     const resp = await request(app)
       .patch(`/items/${PRODUCT1.name}`)
-      .send({price: 1});
-    expect(resp.body).toEqual({updated: {name: PRODUCT1.name, price: 1}});
+      .send({ price: 1 });
+    expect(resp.body).toEqual({ updated: { name: PRODUCT1.name, price: 1 } });
   });
 
   test("invalid doesn't exist", async function () {
     const resp = await request(app)
       .patch("/items/product9")
-      .send({price: 1});
+      .send({ price: 1 });
     expect(resp.status).toEqual(404);
     expect(resp.body).toEqual({
       "error": {
@@ -93,7 +95,7 @@ describe("PATCH /items/:name", function () {
 describe("DELETE /items/:name", function () {
   test("valid", async function () {
     const resp = await request(app).delete(`/items/${PRODUCT1.name}`);
-    expect(resp.body).toEqual({message: "Deleted"});
+    expect(resp.body).toEqual({ message: "Deleted" });
   });
 
   test("invalid", async function () {
