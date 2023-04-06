@@ -89,3 +89,21 @@ describe("PATCH /items/:name", function () {
     });
   });
 });
+
+describe("DELETE /items/:name", function () {
+  test("valid", async function () {
+    const resp = await request(app).delete(`/items/${PRODUCT1.name}`);
+    expect(resp.body).toEqual({message: "Deleted"});
+  });
+
+  test("invalid", async function () {
+    const resp = await request(app).delete("/items/product9");
+    expect(resp.status).toEqual(404);
+    expect(resp.body).toEqual({
+      "error": {
+        "message": "Not Found",
+        "status": 404
+      }
+    });
+  });
+});
